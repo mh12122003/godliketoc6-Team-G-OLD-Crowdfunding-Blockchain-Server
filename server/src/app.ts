@@ -24,8 +24,6 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        secure: true,  // Only use cookies over HTTPS in production
-        sameSite: "none",  // Allow cross-site cookies in production
         maxAge: 60 * 60 * 1000,
     },
     rolling: true,
