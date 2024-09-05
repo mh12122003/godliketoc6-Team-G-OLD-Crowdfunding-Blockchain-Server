@@ -15,7 +15,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 app.use(cors({
-    origin: ["http://localhost:5173", "https://gold-crowfunding-blockchain.netlify.app"],
+    origin: ["http://localhost:5173", "https://sea-lion-app-dyh4n.ondigitalocean.app"],
     credentials: true, // This is important for cookies/sessions
 }));
 
