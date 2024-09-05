@@ -15,7 +15,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 app.use(cors({
-    origin: ["http://localhost:5173", "https://seal-app-a7lmw.ondigitalocean.app"],
+    origin: ["http://localhost:5173", "https://sea-lion-app-dyh4n.ondigitalocean.app", "https://seal-app-a7lmw.ondigitalocean.app"],
     credentials: true, // This is important for cookies/sessions
 }));
 
