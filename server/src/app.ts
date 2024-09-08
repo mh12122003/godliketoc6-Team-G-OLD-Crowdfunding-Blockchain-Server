@@ -29,19 +29,19 @@ app.use(cors({
 }));
 
 app.use(session({
-    secret: env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        maxAge: 60 * 60 * 1000,
-        sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
-        secure: process.env.NODE_ENV === "production",
-        httpOnly: true,
-    },
-    rolling: true,
-    store: MongoStore.create({
-        mongoUrl: env.MONGO_CONNECTION_STRING,
-    }),
+  secret: env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 60 * 60 * 1000,
+    secure: true, // Use true if your site is HTTPS
+    httpOnly: true,
+    sameSite: 'none' // Important for cross-site cookies
+  },
+  rolling: true,
+  store: MongoStore.create({
+    mongoUrl: env.MONGO_CONNECTION_STRING,
+  }),
 }));
 
 app.use("/api/users", userRoutes);
