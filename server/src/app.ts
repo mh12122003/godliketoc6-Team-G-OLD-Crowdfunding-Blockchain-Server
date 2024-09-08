@@ -28,7 +28,8 @@ app.use(session({
         maxAge: 60 * 60 * 1000,
         sameSite: 'none',
         secure: true,
-        httpOnly: true
+        httpOnly: true,
+        domain: '.ondigitalocean.app',
     },
     rolling: true,
     store: MongoStore.create({
