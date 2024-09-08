@@ -10,7 +10,20 @@ import cors from "cors";
 
 const app = express();
 
-app.options('*', cors()) // include before other routes
+// Handle OPTIONS preflight requests
+app.use((req: Request, res: Response, next: NextFunction) => {
+    res.header('Access-Control-Allow-Origin', req.headers.origin as string || ""); // Allow the specific origin
+    res.header('Access-Control-Allow-Credentials', 'true'); // Allow credentials (sessions/cookies)
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    
+    // Respond with a 200 status for OPTIONS requests
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+    
+    next();
+});
 
 app.use(morgan("dev"));
 
