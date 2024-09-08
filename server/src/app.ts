@@ -10,17 +10,17 @@ import cors from "cors";
 
 const app = express();
 
-app.options('*', cors()) // Enable pre-flight for all routes
+app.options('*', cors()) // include before other routes
 
 app.use(morgan("dev"));
 
 app.use(express.json());
 
 app.use(cors({
-  origin: ["http://localhost:5173", "https://seal-app-a7lmw.ondigitalocean.app"],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+    origin: ["http://localhost:5173", "https://seal-app-a7lmw.ondigitalocean.app", "https://gold-t693d.ondigitalocean.app"],
+    credentials: true, // This is important for cookies/sessions
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 app.use(session({
@@ -54,4 +54,5 @@ app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
     }
     res.status(statusCode).json({message: errorMessage});
 })
+
 export default app;
