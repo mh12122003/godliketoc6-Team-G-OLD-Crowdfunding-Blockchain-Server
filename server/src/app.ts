@@ -10,6 +10,8 @@ import cors from "cors";
 
 const app = express();
 
+app.options('*', cors()) // Enable pre-flight for all routes
+
 app.use(morgan("dev"));
 
 app.use(express.json());
