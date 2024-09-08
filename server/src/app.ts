@@ -7,13 +7,22 @@ import session from "express-session";
 import env from"./util/validateEnv";
 import MongoStore from "connect-mongo";
 import cors from "cors";
+
 const app = express();
+
+app.options('*', cors()) // include before other routes
+
 app.use(morgan("dev"));
+
 app.use(express.json());
+
 app.use(cors({
-    origin: ["http://localhost:5173", "https://seal-app-a7lmw.ondigitalocean.app"],
+    origin: ["http://localhost:5173", "https://seal-app-a7lmw.ondigitalocean.app", "https://gold-t693d.ondigitalocean.app"],
     credentials: true, // This is important for cookies/sessions
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
 app.use(session({
     secret: env.SESSION_SECRET,
     resave: false,
@@ -28,10 +37,13 @@ app.use(session({
         mongoUrl: env.MONGO_CONNECTION_STRING,
     }),
 }));
+
 app.use("/api/users", userRoutes);
+
 app.use((req, res, next) => {
     next(createHttpError(404, "Endpoint not found"));
 });
+
 app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
     console.error(error);
     let errorMessage = "An unknown error occurred";
@@ -42,4 +54,5 @@ app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
     }
     res.status(statusCode).json({message: errorMessage});
 })
+
 export default app;
