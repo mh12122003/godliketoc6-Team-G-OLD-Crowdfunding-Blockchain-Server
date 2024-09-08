@@ -10,6 +10,8 @@ import cors from "cors";
 
 const app = express();
 
+app.options('*', cors()) // include before other routes
+
 app.use(morgan("dev"));
 
 app.use(express.json());
