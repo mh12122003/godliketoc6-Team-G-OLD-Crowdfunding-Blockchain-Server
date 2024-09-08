@@ -27,9 +27,9 @@ interface SignUpBody {
 }
 
 export const signUp: RequestHandler<unknown, unknown, SignUpBody, unknown> = async (req, res, next) => {
-    const { username, email, passwordRaw } = req.body;
+    const { username, email, password } = req.body;
     try {
-        if (!username || !email || !passwordRaw) {
+        if (!username || !email || !password) {
             throw createHttpError(400, "Parameters missing");
         }
 
@@ -43,7 +43,7 @@ export const signUp: RequestHandler<unknown, unknown, SignUpBody, unknown> = asy
             throw createHttpError(409, "A user with this email address already exists. Please log in instead.");
         }
 
-        const passwordHashed = await bcrypt.hash(passwordRaw, 10);
+        const passwordHashed = await bcrypt.hash(password, 10);
         const newUser = await UserModel.create({
             username: username,
             email: email,
